@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Editor.GameProject;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,19 @@ namespace Editor
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += OnMainWindowLoaded;
+        }
+
+        private void OnMainWindowLoaded(object sender, RoutedEventArgs e)
+        {
+            Loaded -= OnMainWindowLoaded;
+            OpenProjectSelectionPage();
+        }
+
+        private void OpenProjectSelectionPage()
+        {
+            var projectSelectionPage = new ProjectSelectionPage();
+            MainFrame.Navigate(projectSelectionPage);
         }
     }
 }
