@@ -28,6 +28,11 @@ namespace Editor.GameProject
 
         private void NewProjectButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_cachedProjectCreationPage == null)
+            {
+                _cachedProjectCreationPage = new();
+            }
+
             NavigationService.Navigate(_cachedProjectCreationPage);
         }
     }

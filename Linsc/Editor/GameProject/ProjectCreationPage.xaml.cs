@@ -26,7 +26,7 @@ namespace Editor.GameProject
 
         private void OnCancelButton_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.GoBack();
         }
     }
 }
