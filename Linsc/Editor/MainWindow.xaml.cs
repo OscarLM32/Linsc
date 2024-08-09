@@ -1,4 +1,4 @@
-﻿using Editor.GameProject;
+﻿using LinscEditor.GameProject;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,7 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Editor
+namespace LinscEditor
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
