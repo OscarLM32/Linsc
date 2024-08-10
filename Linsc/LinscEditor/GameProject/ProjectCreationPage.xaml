@@ -18,7 +18,7 @@
 
         <!--Template selection-->
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-            <ListBox Width="200" Height="225" Margin="20" ItemsSource="{Binding ProjectTemplates}" Background="#FF232323" Foreground="White" x:Name="templateListBox">
+            <ListBox Width="200" Height="225" Margin="20" ItemsSource="{Binding ProjectTemplates}" Background="#FF232323" Foreground="White" x:Name="templateListBox" SelectedIndex="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
