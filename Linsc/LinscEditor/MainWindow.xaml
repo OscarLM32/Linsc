@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LinscEditor"
-        mc:Ignorable="d"
-        Title="Linsc" Height="450" Width="800">
-    <Grid Background="#FF111111">
+        mc:Ignorable="d" ResizeMode="CanMinimize"
+        Title="Linsc" Height="585" Width="1040" MinWidth="1040" MinHeight="585"> 
+    <Grid Background="#FF232323">
         <Frame Name="MainFrame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
