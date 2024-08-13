@@ -13,6 +13,8 @@ namespace LinscEditor.GameProject
         [DataMember]
         public string ProjectType { get; set; }
         [DataMember]
+        public string Description { get; set; }
+        [DataMember]
         public string ProjectFile { get; set; }
         [DataMember]
         public List<string> Folders { get; set; }

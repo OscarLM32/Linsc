@@ -42,7 +42,7 @@
                         <ImageBrush ImageSource="{Binding Path=SelectedItem.Thumbnail, ElementName=templateListBox}"/>
                     </Rectangle.Fill>
                 </Rectangle>
-                <TextBlock Text="Test text" TextWrapping="Wrap" Height="60"/>
+                <TextBlock Text="{Binding Path=SelectedItem.Description, ElementName=templateListBox}" TextWrapping="Wrap" Height="60"/>
             </StackPanel>
         </StackPanel>
 
