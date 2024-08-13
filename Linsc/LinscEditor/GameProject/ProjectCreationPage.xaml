@@ -14,6 +14,7 @@
     <Page.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
         </Style>
     </Page.Resources>
     
@@ -30,7 +31,7 @@
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,5,0,5">
                             <Image Source="{Binding Icon}" Margin="0,0,5,0" MaxHeight="48" MaxWidth="48"/>
-                            <TextBlock Text="{Binding ProjectType}" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding ProjectType}" VerticalAlignment="Center" FontSize="14"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -48,13 +49,13 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
             <!--Project info-->
             <StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <TextBlock Text="Name: " Width="50"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Name: " Width="50" TextAlignment="Right" Margin="0,0,5,0"/>
                     <TextBox Width="490" Text="{Binding ProjectName}"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Margin="0,30,0,0">
-                    <TextBlock Text="Path: " Width="50"/>
+                <StackPanel Orientation="Horizontal"  Margin="0,30,0,0">
+                    <TextBlock Text="Path: " Width="50" TextAlignment="Right" Margin="0,0,5,0"/>
                     <TextBox  Width="435" Text="{Binding ProjectPath}"/>
                     <Button Content="Browse"  Width="50" Margin="5,0,0,0"/>
                 </StackPanel>
