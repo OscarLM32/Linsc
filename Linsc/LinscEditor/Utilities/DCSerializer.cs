@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Animation;
 
 namespace LinscEditor.Utilities
 {
-    internal static class Serializer
+    internal static class DCSerializer
     {
         public static void ToFile<T>(T instance, string path)
         {
