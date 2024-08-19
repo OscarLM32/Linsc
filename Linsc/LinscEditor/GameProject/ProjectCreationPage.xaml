@@ -29,7 +29,7 @@
 
         <!--Template selection-->
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" >
-            <ListBox Width="300" Height="350" Margin="20" ItemsSource="{Binding ProjectTemplates}" Background="#FF343434" Foreground="White" x:Name="templateListBox" SelectedIndex="0">
+            <ListBox x:Name="projectTemplateListBox" Width="300" Height="350" Margin="20" ItemsSource="{Binding ProjectTemplates}" Background="#FF343434" Foreground="White" SelectedIndex="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,5,0,5">
@@ -42,10 +42,10 @@
             <StackPanel Margin="20" MaxWidth="400" VerticalAlignment="Center">
                 <Rectangle Width="360" Height="270" Margin="0,0,0,20">
                     <Rectangle.Fill>
-                        <ImageBrush ImageSource="{Binding Path=SelectedItem.Thumbnail, ElementName=templateListBox}"/>
+                        <ImageBrush ImageSource="{Binding Path=SelectedItem.Thumbnail, ElementName=projectTemplateListBox}"/>
                     </Rectangle.Fill>
                 </Rectangle>
-                <TextBlock Text="{Binding Path=SelectedItem.Description, ElementName=templateListBox}" TextWrapping="Wrap" Height="60"/>
+                <TextBlock Text="{Binding Path=SelectedItem.Description, ElementName=projectTemplateListBox}" TextWrapping="Wrap" Height="60"/>
             </StackPanel>
         </StackPanel>
 
@@ -71,7 +71,8 @@
                     <Button Content="Cancel" Width="70" Height="35"
                             Click="OnCancelButton_Click"/>
                     
-                    <Button Content="Create" Width="70" Height="35" Margin="20,0,0,0" IsEnabled="{Binding IsValid}"/>
+                    <Button Content="Create" Width="70" Height="35" Margin="20,0,0,0" IsEnabled="{Binding IsValid}"
+                            Click="OnCreateButton_Click"/>
                 </StackPanel>
 
             </StackPanel>

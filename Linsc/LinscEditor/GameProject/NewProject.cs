@@ -3,6 +3,7 @@ using LinscEditor.Utilities;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using Windows.Storage.AccessCache;
 
 namespace LinscEditor.GameProject
 {
@@ -14,6 +15,7 @@ namespace LinscEditor.GameProject
         private ObservableCollection<ProjectTemplate> _projectTemplates = new();
         public ReadOnlyObservableCollection<ProjectTemplate> ProjectTemplates { get; }
 
+        #region Properties
         private string _projectName = "NewProject";
         public string ProjectName
         {
@@ -71,6 +73,7 @@ namespace LinscEditor.GameProject
                 }
             }
         }
+        #endregion
 
         public NewProject()
         {
@@ -81,7 +84,7 @@ namespace LinscEditor.GameProject
 
                 foreach (string file in templateFiles) 
                 {
-                    ProjectTemplate template = Serializer.FromFile<ProjectTemplate>(file);
+                    ProjectTemplate template = DCSerializer.FromFile<ProjectTemplate>(file);
 
                     template.IconFilePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(file), "icon.png"));
                     template.Icon = File.ReadAllBytes(template.IconFilePath);
@@ -110,6 +113,7 @@ namespace LinscEditor.GameProject
             {
                 ProjectPath += @"\";
             }
+            string path = ProjectPath + $@"{ProjectName}\";
 
             IsValid = false;
             if (string.IsNullOrWhiteSpace(ProjectName.Trim()))
@@ -121,15 +125,15 @@ namespace LinscEditor.GameProject
                 ErrorMsg = "The project name constains invalid characters.";
             }
             //TODO: think on deleting this. The path is never empty since the path gets a "\" added at the beginning of the method
-            else if(string.IsNullOrWhiteSpace(ProjectPath.Trim()))
+            else if(string.IsNullOrWhiteSpace(path.Trim()))
             {
                 ErrorMsg = "The path of the project cannot be empty.";
             }
-            else if (ProjectPath.IndexOfAny(Path.GetInvalidPathChars()) != -1)
+            else if (path.IndexOfAny(Path.GetInvalidPathChars()) != -1)
             {
                 ErrorMsg = "The path of the project contains invalid characters.";
             }
-            else if(Directory.Exists(ProjectPath) && Directory.EnumerateFileSystemEntries(ProjectPath).Any())
+            else if(Directory.Exists(path) && Directory.EnumerateFileSystemEntries(path).Any())
             {
                 ErrorMsg = "The selected directory already exists and is not empty.";
             }
@@ -138,6 +142,44 @@ namespace LinscEditor.GameProject
                 IsValid = true;
                 ErrorMsg = string.Empty;
             }
+        }
+
+        public string CreateProject(ProjectTemplate template)
+        {
+            ValidateData(); //Just in case
+            if (!IsValid) 
+            {
+                return string.Empty; //TODO: return proper error message
+            }
+
+            string path = ProjectPath + $@"{ProjectName}\";
+
+            try
+            {
+                if (Directory.Exists(path)) Directory.CreateDirectory(path);
+                foreach (var folder in template.Folders)
+                {
+                    Directory.CreateDirectory(Path.GetFullPath(Path.Combine(path, folder)));
+                }
+
+                var dirInfo = new DirectoryInfo(path + @".Linsc\");
+                dirInfo.Attributes |= FileAttributes.Hidden;
+                File.Copy(template.IconFilePath, Path.GetFullPath(Path.Combine(dirInfo.FullName, "icon.png")));
+                File.Copy(template.ThumbnailFilePath, Path.GetFullPath(Path.Combine(dirInfo.FullName, "thumbnail.png")));
+
+
+                string projectXML = File.ReadAllText(template.ProjectFilePath);
+                projectXML = string.Format(projectXML, ProjectName, ProjectPath);
+                string projectXMLPath = Path.GetFullPath(Path.Combine(path, $"{ProjectName}{Project.FileExtension}"));
+                File.WriteAllText(projectXMLPath, projectXML);
+                
+                return path;
+            }
+            catch (Exception ex)
+            {
+                return string.Empty; //TODO: return proper error message
+            }
+
         }
     }
 }

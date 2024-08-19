@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,22 @@ namespace LinscEditor.GameProject
         private void OnCancelButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void OnCreateButton_Click(object sender, RoutedEventArgs e)
+        {
+            NewProject vm = DataContext as NewProject;
+            string path = vm.CreateProject(projectTemplateListBox.SelectedItem as ProjectTemplate);
+
+            if (string.IsNullOrEmpty(path))
+            {
+                //TODO: log a proper error dialog
+                Debug.WriteLine("There was an error creating the project");
+            }
+            else
+            {
+                NavigationService.GoBack();
+            }
         }
     }
 }
