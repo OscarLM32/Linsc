@@ -10,19 +10,26 @@
     <Page.DataContext>
         <local:OpenProject/>
     </Page.DataContext>
-    <Grid>
+
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="30,0,30,0">
         <!--Content panel-->
         <Grid.RowDefinitions>
-            <RowDefinition Height="85*"/>
-            <RowDefinition Height="15*"/>
+            <RowDefinition Height="83*"/>
+            <RowDefinition Height="17*"/>
         </Grid.RowDefinitions>
 
         <!-- Projects -->
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="10*"/>
-                <RowDefinition Height="90*"/>
-                <RowDefinition />
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="85*"/>
             </Grid.RowDefinitions>
 
             <!--Search/New panel-->
@@ -42,7 +49,7 @@
 
                 <!--New Project button-->
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Content="NEW" FontSize="20" VerticalAlignment="Center" Margin="0,0,20,0"
+                    <Button Content="New" FontSize="20" Width="80" Height="35" VerticalAlignment="Center" Margin="0,0,20,0"
                                 Click="NewProjectButton_Click"/>
                 </StackPanel>
             </Grid>
@@ -50,12 +57,13 @@
 
             <!--Game Projects-->
             <StackPanel Grid.Row="1">
-                <ListBox x:Name="projectListBox" ItemsSource="{Binding ProjectData}" 
+                <ListBox x:Name="projectListBox" ItemsSource="{Binding ProjectData}"
+                             BorderThickness="0"
                              Background="Transparent"
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ScrollViewer.VerticalScrollBarVisibility="Auto"
                              HorizontalAlignment="Stretch"
-                             Height="440">
+                             Height="400">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Horizontal"/>
@@ -64,17 +72,39 @@
 
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border BorderThickness="0">
-                                <StackPanel Width="160" Height="140" Margin="15" Background="Black">
-                                    <Image Width="140" Height="90" Source="{Binding Thumbnail}" Margin="10"/>
-                                    <TextBlock Text="{Binding Name}" Foreground="White" HorizontalAlignment="Center" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
-                                </StackPanel>
-                            </Border>
+                            <StackPanel Width="150" Height="140" Margin="15" Background="Black">
+                                <Image Width="120" Height="90" Source="{Binding Thumbnail}" Margin="10"/>
+                                <TextBlock Text="{Binding Name}" Foreground="White" HorizontalAlignment="Center" TextTrimming="CharacterEllipsis" MaxWidth="120"/>
+                            </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
             </StackPanel>
+        </Grid>
 
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80*"/>
+                <ColumnDefinition Width="20*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Grid.ColumnSpan="2">
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Text="Name: " Width="50" TextAlignment="Right" Margin="0,0,5,0"/>
+                    <TextBox Width="490" Text="{Binding Path=SelectedItem.Name, ElementName=projectListBox}" IsReadOnly="True"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal"  Margin="0,30,0,0">
+                    <TextBlock Text="Path: " Width="50" TextAlignment="Right" Margin="0,0,5,0"/>
+                    <TextBox  Width="435" Text="{Binding Path=SelectedItem.DirPath, ElementName=projectListBox}" IsReadOnly="True"/>
+                    <Button Content="Browse"  Width="50" Margin="5,0,0,0"/>
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Button Content="Open" FontSize="25" Width="80" Height="40"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>
