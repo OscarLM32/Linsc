@@ -167,7 +167,6 @@ namespace LinscEditor.GameProject
                 File.Copy(template.IconFilePath, Path.GetFullPath(Path.Combine(dirInfo.FullName, "icon.png")));
                 File.Copy(template.ThumbnailFilePath, Path.GetFullPath(Path.Combine(dirInfo.FullName, "thumbnail.png")));
 
-
                 string projectXML = File.ReadAllText(template.ProjectFilePath);
                 projectXML = string.Format(projectXML, ProjectName, ProjectPath);
                 string projectXMLPath = Path.GetFullPath(Path.Combine(path, $"{ProjectName}{Project.FileExtension}"));

@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace LinscEditor.GameProject
 {
@@ -32,8 +21,8 @@ namespace LinscEditor.GameProject
 
         private void OnCreateButton_Click(object sender, RoutedEventArgs e)
         {
-            NewProject vm = DataContext as NewProject;
-            string path = vm.CreateProject(projectTemplateListBox.SelectedItem as ProjectTemplate);
+            NewProject newProject = DataContext as NewProject;
+            string path = newProject.CreateProject(projectTemplateListBox.SelectedItem as ProjectTemplate);
 
             if (string.IsNullOrEmpty(path))
             {
@@ -42,6 +31,9 @@ namespace LinscEditor.GameProject
             }
             else
             {
+                ProjectData newProjectData = new ProjectData(newProject.ProjectName, @$"{newProject.ProjectPath}{newProject.ProjectName}", DateTime.Now, DateTime.Now);
+                ProjectDataHandler.AddProjectData(newProjectData);
+
                 NavigationService.GoBack();
             }
         }
