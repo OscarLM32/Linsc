@@ -26,6 +26,24 @@ namespace LinscEditor.GameProject
         [DataMember]
         public Project Project { get; private set; }
 
+        [DataMember]
+
+        private bool _isActive;
+        [DataMember]
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    OnPropertyChanged(nameof(IsActive));
+                }
+            }
+        }
+
+
         public Scene(string name, Project project)
         {
             Debug.Assert(project != null);

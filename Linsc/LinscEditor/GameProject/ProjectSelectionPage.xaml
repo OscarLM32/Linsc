@@ -103,7 +103,8 @@
             </StackPanel>
 
             <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Button Content="Open" FontSize="25" Width="80" Height="40"/>
+                <Button Content="Open" FontSize="25" Width="80" Height="40"
+                        Click="OnOpenProjectButton_Click"/>
             </StackPanel>
         </Grid>
     </Grid>

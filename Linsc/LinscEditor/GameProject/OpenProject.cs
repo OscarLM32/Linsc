@@ -1,5 +1,6 @@
 ﻿using LinscEditor.Common;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace LinscEditor.GameProject
 {
@@ -13,18 +14,17 @@ namespace LinscEditor.GameProject
             //Update the project data stores in this instance in case some other instance of the editor has modified it
             ProjectDataHandler.ReadProjectData();
             var projectData = ProjectData.FirstOrDefault(x => x.ProjectPath == data.ProjectPath);
-            if (projectData == null)
-            {
-                //TODO: Log a proper error
-            }
-            else
+            if (projectData != null)
             {
                 projectData.LastAccessTime = DateTime.Now;
                 ProjectDataHandler.WriteProjectData();
             }
-            
+            else
+            {
+                //TODO: Log a proper error
+            }
 
-            return null;
+            return Project.Load(projectData.ProjectPath);
         }
     }
 }

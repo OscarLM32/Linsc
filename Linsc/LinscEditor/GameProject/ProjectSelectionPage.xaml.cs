@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 
 namespace LinscEditor.GameProject
 {
@@ -30,6 +23,24 @@ namespace LinscEditor.GameProject
             }
 
             NavigationService.Navigate(_cachedProjectCreationPage);
+        }
+
+        private void OnOpenProjectButton_Click(object sender, RoutedEventArgs e)
+        {
+            var win = Window.GetWindow(this);
+
+            OpenProject op = DataContext as OpenProject;
+            ProjectData selectedProject = projectListBox.SelectedItem as ProjectData;
+
+            if(selectedProject != null)
+            {
+                var project = op.Open(selectedProject);
+                win.DataContext = project;
+            }
+            else
+            {
+                //TODO: log a proper error dialog
+            }
         }
     }
 }
