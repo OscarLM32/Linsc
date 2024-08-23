@@ -21,18 +21,12 @@ namespace LinscEditor
         {
             InitializeComponent();
             Loaded += OnMainWindowLoaded;
-            Closed += OnMainWindowClosed;
         }
 
         private void OnMainWindowLoaded(object sender, RoutedEventArgs e)
         {
             Loaded -= OnMainWindowLoaded;
             OpenProjectSelectionPage();
-        }
-        private void OnMainWindowClosed(object? sender, EventArgs e)
-        {
-            Closed -= OnMainWindowClosed;
-            Project.Current?.Unload();
         }
 
         private void OpenProjectSelectionPage()

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using LinscEditor.Editors.GameEditor;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace LinscEditor.GameProject
@@ -27,7 +28,8 @@ namespace LinscEditor.GameProject
 
         private void OnOpenProjectButton_Click(object sender, RoutedEventArgs e)
         {
-            var win = Window.GetWindow(this);
+            var thisWindow = Window.GetWindow(this);
+            var gameEditorWindow = new MainGameEditorWindow();
 
             OpenProject op = DataContext as OpenProject;
             ProjectData selectedProject = projectListBox.SelectedItem as ProjectData;
@@ -35,7 +37,12 @@ namespace LinscEditor.GameProject
             if(selectedProject != null)
             {
                 var project = op.Open(selectedProject);
-                win.DataContext = project;
+
+                gameEditorWindow.DataContext = project;
+                gameEditorWindow.Show();
+                Application.Current.MainWindow = gameEditorWindow;
+
+                thisWindow.Close();
             }
             else
             {
