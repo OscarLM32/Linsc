@@ -11,7 +11,7 @@ using System.Windows;
 namespace LinscEditor.GameProject
 {
     [DataContract(Name = "GameProject")]
-    internal class Project : ViewModelBase
+    public class Project : ViewModelBase
     {
         public static Project Current => Application.Current.MainWindow.DataContext as Project;
 
@@ -77,6 +77,18 @@ namespace LinscEditor.GameProject
         public static void Save(Project project)
         {
             DCSerializer.ToFile(project, project.FullPath);
+        }
+
+        public void AddScene(string sceneName)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(sceneName.Trim()));
+            _scenes.Add(new Scene(sceneName, this));
+        }
+
+        public void RemoveScene(Scene scene) 
+        {
+            Debug.Assert(Scenes.Contains(scene));
+            _scenes.Remove(scene);
         }
     }
 }

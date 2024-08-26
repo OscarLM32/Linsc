@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace LinscEditor.GameProject
 {
     [DataContract]
-    internal class Scene : ViewModelBase
+    public class Scene : ViewModelBase
     {
 
         private string _name;
