@@ -71,7 +71,7 @@ namespace LinscEditor.Utilities
                 var command = _undoList.Last();
                 command.Undo();
                 _redoList.Add(command);
-                _undoList.RemoveAt(_redoList.Count - 1);
+                _undoList.RemoveAt(_undoList.Count - 1);
             }
         }
 

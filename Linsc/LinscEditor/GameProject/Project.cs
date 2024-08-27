@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Security.Policy;
 using System.Windows;
 using System.Windows.Input;
 
@@ -16,6 +17,8 @@ namespace LinscEditor.GameProject
         public static string FileExtension { get; } = ".linsc";
 
         public static UndoRedo UndoRedo { get; private set; } = new();
+        public ICommand Undo { get; private set; }
+        public ICommand Redo { get; private set; }
 
         [DataMember]
         public string Name { get; private set; }
@@ -42,7 +45,6 @@ namespace LinscEditor.GameProject
             }
         }
 
-
         public Project(string name, string path)
         {
             Name = name;
@@ -51,18 +53,27 @@ namespace LinscEditor.GameProject
             OnDeserialized(new StreamingContext());
         }
 
-
         public static Project Load(string file)
         {
             Debug.Assert(File.Exists(file));
             return DCSerializer.FromFile<Project>(file);
         }
 
-        [OnDeserialized]
-        //TODO: I do not thnik the streaming context is necessary
-        private void OnDeserialized(StreamingContext context) 
+        public void Unload()
         {
-            if(_scenes != null)
+
+        }
+
+        public static void Save(Project project)
+        {
+            DCSerializer.ToFile(project, project.FullPath);
+        }
+
+        [OnDeserialized]
+        //TODO: I do not think the streaming context is necessary
+        private void OnDeserialized(StreamingContext context)
+        {
+            if (_scenes != null)
             {
                 Scenes = new ReadOnlyObservableCollection<Scene>(_scenes);
                 OnPropertyChanged(nameof(Scenes));
@@ -78,7 +89,7 @@ namespace LinscEditor.GameProject
 
                     UndoRedo.Add(new UndoRedoAction
                     (
-                        () => RemoveSceneInternal(newScene), 
+                        () => RemoveSceneInternal(newScene),
                         () => _scenes.Insert(newSceneIndex, newScene),
                         $"Add scene {newScene.Name}"
                     ));
@@ -97,23 +108,16 @@ namespace LinscEditor.GameProject
                         () => RemoveSceneInternal(scene),
                         $"Remove scene {scene.Name}"
                     ));
-                }, 
+                },
 
                 scene =>
                 {
                     return !scene.IsActive;
-                }            
+                }
             );
-        }
 
-        public void Unload()
-        {
-
-        }
-
-        public static void Save(Project project)
-        {
-            DCSerializer.ToFile(project, project.FullPath);
+            Undo = new RelayCommand<object>((x) => UndoRedo.Undo());
+            Redo = new RelayCommand<object>((x) => UndoRedo.Redo());
         }
 
         public ICommand AddScene { get; private set; }
