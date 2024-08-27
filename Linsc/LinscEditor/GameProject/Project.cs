@@ -1,12 +1,10 @@
-﻿
-
-using LinscEditor.Common;
-using LinscEditor.Utilities;
+﻿using LinscEditor.Utilities;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Windows;
+using System.Windows.Input;
 
 namespace LinscEditor.GameProject
 {
@@ -16,6 +14,8 @@ namespace LinscEditor.GameProject
         public static Project Current => Application.Current.MainWindow.DataContext as Project;
 
         public static string FileExtension { get; } = ".linsc";
+
+        public static UndoRedo UndoRedo { get; private set; } = new();
 
         [DataMember]
         public string Name { get; private set; }
@@ -51,6 +51,7 @@ namespace LinscEditor.GameProject
             OnDeserialized(new StreamingContext());
         }
 
+
         public static Project Load(string file)
         {
             Debug.Assert(File.Exists(file));
@@ -67,6 +68,42 @@ namespace LinscEditor.GameProject
                 OnPropertyChanged(nameof(Scenes));
             }
             ActiveScene = Scenes.FirstOrDefault(x => x.IsActive);
+
+            AddScene = new RelayCommand<object>(
+                x =>
+                {
+                    AddSceneInternal($"New Scene {_scenes.Count}");
+                    Scene newScene = _scenes.Last();
+                    int newSceneIndex = _scenes.Count - 1;
+
+                    UndoRedo.Add(new UndoRedoAction
+                    (
+                        () => RemoveSceneInternal(newScene), 
+                        () => _scenes.Insert(newSceneIndex, newScene),
+                        $"Add scene {newScene.Name}"
+                    ));
+                }
+            );
+
+            RemoveScene = new RelayCommand<Scene>(
+                scene =>
+                {
+                    int sceneIndex = Scenes.IndexOf(scene);
+                    RemoveSceneInternal(scene);
+
+                    UndoRedo.Add(new UndoRedoAction
+                    (
+                        () => _scenes.Insert(sceneIndex, scene),
+                        () => RemoveSceneInternal(scene),
+                        $"Remove scene {scene.Name}"
+                    ));
+                }, 
+
+                scene =>
+                {
+                    return !scene.IsActive;
+                }            
+            );
         }
 
         public void Unload()
@@ -79,13 +116,16 @@ namespace LinscEditor.GameProject
             DCSerializer.ToFile(project, project.FullPath);
         }
 
-        public void AddScene(string sceneName)
+        public ICommand AddScene { get; private set; }
+        public ICommand RemoveScene { get; private set; }
+
+        private void AddSceneInternal(string sceneName)
         {
             Debug.Assert(!string.IsNullOrEmpty(sceneName.Trim()));
             _scenes.Add(new Scene(sceneName, this));
         }
 
-        public void RemoveScene(Scene scene) 
+        private void RemoveSceneInternal(Scene scene) 
         {
             Debug.Assert(Scenes.Contains(scene));
             _scenes.Remove(scene);

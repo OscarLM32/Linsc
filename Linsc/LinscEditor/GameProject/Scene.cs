@@ -1,5 +1,4 @@
-﻿using LinscEditor.Common;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Runtime.Serialization;
 
 namespace LinscEditor.GameProject

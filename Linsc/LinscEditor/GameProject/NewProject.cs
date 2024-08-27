@@ -1,9 +1,7 @@
-﻿using LinscEditor.Common;
-using LinscEditor.Utilities;
+﻿using LinscEditor.Utilities;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using Windows.Storage.AccessCache;
 
 namespace LinscEditor.GameProject
 {
