@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.Serialization;
 
-namespace LinscEditor.Common
+namespace LinscEditor
 {
     [DataContract(IsReference = true)]
     public class ViewModelBase : INotifyPropertyChanged
