@@ -121,6 +121,7 @@ namespace LinscEditor.GameProject
             UndoCommand = new RelayCommand<object>((x) => UndoRedo.Undo());
             RedoCommand = new RelayCommand<object>((x) => UndoRedo.Redo());
 
+            SaveCommand = new RelayCommand<object>((x) => Save(this));
         }
 
         public ICommand AddSceneCommand { get; private set; }
