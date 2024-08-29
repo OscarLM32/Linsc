@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 namespace LinscEditor.Components
 {
     [DataContract]
+    [KnownType(typeof(Transform))]
     public class GameEntity : ViewModelBase
     {
         private string _name = "New GameEntity";
@@ -30,7 +31,7 @@ namespace LinscEditor.Components
 
         [DataMember(Name = "Components")]
         private readonly ObservableCollection<Component> _components = new();
-        public ReadOnlyObservableCollection<Component> Components { get; }
+        public ReadOnlyObservableCollection<Component> Components { get; private set; }
 
 
         public GameEntity(Scene parentScene)
@@ -38,7 +39,17 @@ namespace LinscEditor.Components
             Debug.Assert(parentScene != null);
             ParentScene = parentScene;
 
-            Components = new(_components);
+            _components.Add(new Transform(this));
+        }
+
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext context)
+        {
+            if(_components != null)
+            {
+                Components = new(_components);
+                OnPropertyChanged(nameof(Components));
+            }
         }
     }
 }
