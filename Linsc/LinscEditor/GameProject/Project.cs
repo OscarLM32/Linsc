@@ -17,8 +17,8 @@ namespace LinscEditor.GameProject
         public static string FileExtension { get; } = ".linsc";
 
         public static UndoRedo UndoRedo { get; private set; } = new();
-        public ICommand Undo { get; private set; }
-        public ICommand Redo { get; private set; }
+        public ICommand UndoCommand { get; private set; }
+        public ICommand RedoCommand { get; private set; }
 
         [DataMember]
         public string Name { get; private set; }
@@ -64,6 +64,8 @@ namespace LinscEditor.GameProject
 
         }
 
+        public ICommand SaveCommand { get; private set; }
+
         public static void Save(Project project)
         {
             DCSerializer.ToFile(project, project.FullPath);
@@ -80,7 +82,7 @@ namespace LinscEditor.GameProject
             }
             ActiveScene = Scenes.FirstOrDefault(x => x.IsActive);
 
-            AddScene = new RelayCommand<object>(
+            AddSceneCommand = new RelayCommand<object>(
                 x =>
                 {
                     AddSceneInternal($"New Scene {_scenes.Count}");
@@ -96,7 +98,7 @@ namespace LinscEditor.GameProject
                 }
             );
 
-            RemoveScene = new RelayCommand<Scene>(
+            RemoveSceneCommand = new RelayCommand<Scene>(
                 scene =>
                 {
                     int sceneIndex = Scenes.IndexOf(scene);
@@ -116,12 +118,13 @@ namespace LinscEditor.GameProject
                 }
             );
 
-            Undo = new RelayCommand<object>((x) => UndoRedo.Undo());
-            Redo = new RelayCommand<object>((x) => UndoRedo.Redo());
+            UndoCommand = new RelayCommand<object>((x) => UndoRedo.Undo());
+            RedoCommand = new RelayCommand<object>((x) => UndoRedo.Redo());
+
         }
 
-        public ICommand AddScene { get; private set; }
-        public ICommand RemoveScene { get; private set; }
+        public ICommand AddSceneCommand { get; private set; }
+        public ICommand RemoveSceneCommand { get; private set; }
 
         private void AddSceneInternal(string sceneName)
         {

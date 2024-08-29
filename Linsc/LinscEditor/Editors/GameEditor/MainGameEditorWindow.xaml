@@ -9,8 +9,9 @@
         Title="MainGameEditorWindow" Height="1080" Width="1920">
 
     <Window.InputBindings>
-        <KeyBinding Command="{Binding Undo}" Key="Z" Modifiers="Ctrl"/>
-        <KeyBinding Command="{Binding Redo}" Key="Z" Modifiers="Ctrl+Shift"/>
+        <KeyBinding Command="{Binding UndoCommand}" Key="Z" Modifiers="Ctrl"/>
+        <KeyBinding Command="{Binding RedoCommand}" Key="Z" Modifiers="Ctrl+Shift"/>
+
     </Window.InputBindings>
     
     <Grid Background="Black">
