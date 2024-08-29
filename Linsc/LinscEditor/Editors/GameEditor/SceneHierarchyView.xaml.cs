@@ -9,9 +9,9 @@ namespace LinscEditor.Editors.GameEditor
     /// <summary>
     /// Interaction logic for SceneHierarchyControl.xaml
     /// </summary>
-    public partial class SceneHierarchyControl : UserControl
+    public partial class SceneHierarchyView : UserControl
     {
-        public SceneHierarchyControl()
+        public SceneHierarchyView()
         {
             InitializeComponent();
         }
@@ -22,6 +22,12 @@ namespace LinscEditor.Editors.GameEditor
             var vm = button.DataContext as Scene;
 
             vm.AddGameEntityCommand.Execute( new GameEntity(vm) { Name = "New Game Entity" });
+        }
+
+        private void OnSceneEntitiesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedItem = (sender as ListBox).SelectedItems[0];
+            GameEntityView.Instance.DataContext = selectedItem;
         }
     }
 }
