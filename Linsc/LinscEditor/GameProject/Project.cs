@@ -72,7 +72,6 @@ namespace LinscEditor.GameProject
         }
 
         [OnDeserialized]
-        //TODO: I do not think the streaming context is necessary
         private void OnDeserialized(StreamingContext context)
         {
             if (_scenes != null)
@@ -85,13 +84,13 @@ namespace LinscEditor.GameProject
             AddSceneCommand = new RelayCommand<object>(
                 x =>
                 {
-                    AddSceneInternal($"New Scene {_scenes.Count}");
+                    AddScene($"New Scene {_scenes.Count}");
                     Scene newScene = _scenes.Last();
                     int newSceneIndex = _scenes.Count - 1;
 
                     UndoRedo.Add(new UndoRedoAction
                     (
-                        () => RemoveSceneInternal(newScene),
+                        () => RemoveScene(newScene),
                         () => _scenes.Insert(newSceneIndex, newScene),
                         $"Add scene {newScene.Name}"
                     ));
@@ -102,12 +101,12 @@ namespace LinscEditor.GameProject
                 scene =>
                 {
                     int sceneIndex = Scenes.IndexOf(scene);
-                    RemoveSceneInternal(scene);
+                    RemoveScene(scene);
 
                     UndoRedo.Add(new UndoRedoAction
                     (
                         () => _scenes.Insert(sceneIndex, scene),
-                        () => RemoveSceneInternal(scene),
+                        () => RemoveScene(scene),
                         $"Remove scene {scene.Name}"
                     ));
                 },
@@ -127,13 +126,13 @@ namespace LinscEditor.GameProject
         public ICommand AddSceneCommand { get; private set; }
         public ICommand RemoveSceneCommand { get; private set; }
 
-        private void AddSceneInternal(string sceneName)
+        private void AddScene(string sceneName)
         {
             Debug.Assert(!string.IsNullOrEmpty(sceneName.Trim()));
             _scenes.Add(new Scene(sceneName, this));
         }
 
-        private void RemoveSceneInternal(Scene scene) 
+        private void RemoveScene(Scene scene) 
         {
             Debug.Assert(Scenes.Contains(scene));
             _scenes.Remove(scene);
