@@ -24,7 +24,7 @@ namespace LinscEditor.GameProject
         public string Name { get; private set; }
         [DataMember]
         public string Path { get; private set; }
-        public string FullPath { get => $"{Path}{Name}"; }
+        public string FullPath { get => $@"{Path}{Name}\{Name}{FileExtension}"; }
 
         [DataMember(Name = "Scenes")]
         private ObservableCollection<Scene> _scenes = new();

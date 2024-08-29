@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using LinscEditor.Components;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Runtime.Serialization;
 
 namespace LinscEditor.GameProject
@@ -41,6 +43,11 @@ namespace LinscEditor.GameProject
                 }
             }
         }
+
+        [DataMember(Name = "Entities")]
+        private ObservableCollection<GameEntity> _entities = new();
+        public ReadOnlyObservableCollection<GameEntity> Entities { get; }
+
 
 
         public Scene(string name, Project project)
