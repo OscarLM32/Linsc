@@ -26,8 +26,12 @@ namespace LinscEditor.Editors.GameEditor
 
         private void OnSceneEntitiesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedItem = (sender as ListBox).SelectedItems[0];
-            GameEntityView.Instance.DataContext = selectedItem;
+            GameEntityView.Instance.DataContext = null;
+            var listbox = (ListBox)sender;
+            if(listbox.SelectedItems.Count > 0)
+            {
+                GameEntityView.Instance.DataContext = listbox.SelectedItems[0];
+            }
         }
     }
 }
