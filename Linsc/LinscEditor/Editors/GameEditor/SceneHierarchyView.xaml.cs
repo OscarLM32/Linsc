@@ -1,7 +1,5 @@
 ﻿using LinscEditor.Components;
 using LinscEditor.GameProject;
-using System;
-using System.Collections.Generic;
 using System.Windows.Controls;
 
 namespace LinscEditor.Editors.GameEditor

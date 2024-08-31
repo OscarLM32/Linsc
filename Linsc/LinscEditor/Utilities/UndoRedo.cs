@@ -1,7 +1,6 @@
 ﻿
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Security.Policy;
 
 namespace LinscEditor.Utilities
 {
