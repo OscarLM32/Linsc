@@ -40,6 +40,7 @@ namespace LinscEditor.Components
             ParentScene = parentScene;
 
             _components.Add(new Transform(this));
+            Components = new(_components);
         }
 
         [OnDeserialized]
