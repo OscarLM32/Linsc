@@ -38,6 +38,6 @@
 
         <GridSplitter Grid.Column="2" Width="2" Background="Gray" VerticalAlignment="Stretch" HorizontalAlignment="Left"/>
 
-        <local:GameEntityView Grid.Column="2" Background="White"/>
+        <local:GameEntityView Grid.Column="2"/>
     </Grid>
 </Window>
