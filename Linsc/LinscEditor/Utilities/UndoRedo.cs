@@ -39,6 +39,8 @@ namespace LinscEditor.Utilities
 
     public class UndoRedo
     {
+        private bool _canAddCommand = true;
+
         private ObservableCollection<IUndoRedo> _undoList = new();
         public ReadOnlyObservableCollection<IUndoRedo> UndoList { get; }
 
@@ -53,8 +55,11 @@ namespace LinscEditor.Utilities
 
         public void Add(IUndoRedo command)
         {
-            _undoList.Add(command);
-            _redoList.Clear();
+            if (_canAddCommand)
+            {
+                _undoList.Add(command);
+                _redoList.Clear();
+            }
         }
 
         public void Reset()
@@ -68,7 +73,9 @@ namespace LinscEditor.Utilities
             if (_undoList.Any())
             {
                 var command = _undoList.Last();
+                _canAddCommand = false;
                 command.Undo();
+                _canAddCommand = true;
                 _redoList.Add(command);
                 _undoList.RemoveAt(_undoList.Count - 1);
             }
@@ -79,7 +86,9 @@ namespace LinscEditor.Utilities
             if (_redoList.Any())
             {
                 var command = _redoList.Last();
+                _canAddCommand = false;
                 command.Redo();
+                _canAddCommand = true;
                 _undoList.Add(command);
                 _redoList.RemoveAt(_redoList.Count-1);
             }

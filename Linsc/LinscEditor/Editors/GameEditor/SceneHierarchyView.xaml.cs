@@ -1,5 +1,6 @@
 ﻿using LinscEditor.Components;
 using LinscEditor.GameProject;
+using LinscEditor.Utilities;
 using System.Windows.Controls;
 
 namespace LinscEditor.Editors.GameEditor
@@ -30,6 +31,35 @@ namespace LinscEditor.Editors.GameEditor
             {
                 GameEntityView.Instance.DataContext = listbox.SelectedItems[0];
             }
+
+            AddselectionUndoRedoActions(listbox, e);
+        }
+
+        private void AddselectionUndoRedoActions(ListBox listbox, SelectionChangedEventArgs e)
+        {
+            var newSelection = listbox.SelectedItems.Cast<GameEntity>().ToList();
+            var previousSelection = newSelection.Except(e.AddedItems.Cast<GameEntity>()).Concat(e.RemovedItems.Cast<GameEntity>()).ToList();
+
+            Project.UndoRedo.Add(new UndoRedoAction
+            (
+                () =>
+                {
+                    listbox.SelectedItems.Clear();
+                    foreach(var item in previousSelection)
+                    {
+                        listbox.SelectedItems.Add(item);
+                    }
+                },
+                () =>
+                {
+                    listbox.SelectedItems.Clear();
+                    foreach (var item in newSelection)
+                    {
+                        listbox.SelectedItems.Add(item);
+                    }
+                },
+                "Item selection changed"
+            ));
         }
     }
 }
