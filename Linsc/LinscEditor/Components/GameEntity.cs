@@ -26,6 +26,23 @@ namespace LinscEditor.Components
             }
         }
 
+
+        private bool _isEnabled = true;
+        [DataMember]
+        public bool IsEnabled
+        {
+            get => _isEnabled;
+            set
+            {
+                if (_isEnabled != value)
+                {
+                    _isEnabled = value;
+                    OnPropertyChanged(nameof(IsEnabled));
+                }
+            }
+        }
+
+
         [DataMember]
         public Scene ParentScene { get; private set; }
 

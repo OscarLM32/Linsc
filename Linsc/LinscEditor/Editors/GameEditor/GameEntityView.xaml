@@ -7,7 +7,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="540" d:DesignWidth="400">
     <StackPanel>
-        <TextBlock Text="{Binding Name}" Foreground="White"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="80*"/>
+                <ColumnDefinition Width="10*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="1" Text="{Binding Name}"/>
+            <CheckBox Grid.Column="2" IsChecked="{Binding IsEnabled}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
         <ItemsControl ItemsSource="{Binding Components}" Foreground="White">
         </ItemsControl>
     </StackPanel>
