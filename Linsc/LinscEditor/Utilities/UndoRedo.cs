@@ -31,19 +31,20 @@ namespace LinscEditor.Utilities
         public UndoRedoAction(Action undoAction, Action redoAction, string name)
             : this(name)
         {
-            Debug.Assert(undoAction != null &&  redoAction != null);
+            Debug.Assert(undoAction != null && redoAction != null);
             _undoAction = undoAction;
             _redoAction = redoAction;
         }
 
         public UndoRedoAction(string property, object obj, object undoValue, object redoValue, string name)
-            :this(
+            : this(
                 () => obj.GetType().GetProperty(property).SetValue(obj, undoValue),
                 () => obj.GetType().GetProperty(property).SetValue(obj, redoValue),
                 name
             )
         { }
 
+    }
     public class UndoRedo
     {
         private bool _canAddCommand = true;
@@ -52,7 +53,7 @@ namespace LinscEditor.Utilities
         public ReadOnlyObservableCollection<IUndoRedo> UndoList { get; }
 
         private ObservableCollection<IUndoRedo> _redoList = new();
-        public ReadOnlyObservableCollection<IUndoRedo> RedoList {  get; }
+        public ReadOnlyObservableCollection<IUndoRedo> RedoList { get; }
 
         public UndoRedo()
         {
@@ -97,7 +98,7 @@ namespace LinscEditor.Utilities
                 command.Redo();
                 _canAddCommand = true;
                 _undoList.Add(command);
-                _redoList.RemoveAt(_redoList.Count-1);
+                _redoList.RemoveAt(_redoList.Count - 1);
             }
         }
     }
