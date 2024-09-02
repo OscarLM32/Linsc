@@ -97,7 +97,7 @@ namespace LinscEditor.Components
                 {
                     IsEnabled = value;
 
-                    Project.UndoRedo.Add(new UndoRedoAction(nameof(IsEnabled), this, !value, value, $"Enable {Name}"));
+                    Project.UndoRedo.Add(new UndoRedoAction(nameof(IsEnabled), this, !value, value, $"Enable/Disable {Name}"));
                 }
             );
         }
