@@ -43,7 +43,7 @@ namespace LinscEditor.Components
                 }
             }
         }
-        public ICommand EnableCommand { get; private set; }
+        public ICommand IsEnableCommand { get; private set; }
 
         [DataMember]
         public Scene ParentScene { get; private set; }
@@ -91,7 +91,7 @@ namespace LinscEditor.Components
                 }
             );
 
-            EnableCommand = new RelayCommand<bool>
+            IsEnableCommand = new RelayCommand<bool>
             (
                 value =>
                 {
