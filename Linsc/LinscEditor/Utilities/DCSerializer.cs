@@ -17,8 +17,8 @@ namespace LinscEditor.Utilities
             }
             catch (Exception ex)
             {
-                //TODO: Show a proper error dialog 
-                Debug.WriteLine(ex.Message);
+                Logger.LogMessage(MessageType.ERROR, $"Error serializing {instance} to {path}");
+                throw;
             }
         }
 
@@ -33,8 +33,8 @@ namespace LinscEditor.Utilities
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
-                return default;
+                Logger.LogMessage(MessageType.ERROR, $"Error deserializing {path}");
+                throw;
             }
         }
     }

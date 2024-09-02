@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using LinscEditor.Utilities;
+using System.Collections.ObjectModel;
 
 namespace LinscEditor.GameProject
 {
@@ -19,7 +20,7 @@ namespace LinscEditor.GameProject
             }
             else
             {
-                //TODO: Log a proper error
+                Logger.LogMessage(MessageType.ERROR, $"Error opening the project {projectData?.Name}");
             }
 
             return Project.Load(projectData.ProjectPath);

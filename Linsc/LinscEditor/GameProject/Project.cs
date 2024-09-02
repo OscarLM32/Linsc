@@ -60,7 +60,7 @@ namespace LinscEditor.GameProject
 
         public void Unload()
         {
-
+            UndoRedo.Reset();
         }
 
         public ICommand SaveCommand { get; private set; }
@@ -68,6 +68,7 @@ namespace LinscEditor.GameProject
         public static void Save(Project project)
         {
             DCSerializer.ToFile(project, project.FullPath);
+            Logger.LogMessage(MessageType.INFO, $"The project has been saved to {project.FullPath}");
         }
 
         [OnDeserialized]

@@ -100,8 +100,9 @@ namespace LinscEditor.GameProject
             }
             catch (Exception ex)
             {
-                //TODO: properly show an error dialog window
+                Logger.LogMessage(MessageType.ERROR, $"Failed to read project templates from {_projectTemplatesPath}");
                 Debug.WriteLine(ex.Message);
+                throw;
             }
         }
 
@@ -174,7 +175,8 @@ namespace LinscEditor.GameProject
             }
             catch (Exception ex)
             {
-                return string.Empty; //TODO: return proper error message
+                Logger.LogMessage(MessageType.ERROR, $"Failed to create project {ProjectName}");
+                throw;
             }
 
         }

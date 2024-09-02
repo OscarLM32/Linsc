@@ -63,9 +63,9 @@ namespace LinscEditor.GameProject
                 ReadProjectData();
             }
             catch (Exception ex) 
-            { 
-                //TODO: log a proper dialog window
-                Debug.WriteLine(ex.Message);
+            {
+                Logger.LogMessage(MessageType.ERROR, $"Failed to read project data");
+                throw;
             }
         }
 
