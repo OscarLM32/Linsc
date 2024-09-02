@@ -35,7 +35,14 @@ namespace LinscEditor.Utilities
             _undoAction = undoAction;
             _redoAction = redoAction;
         }
-    }
+
+        public UndoRedoAction(string property, object obj, object undoValue, object redoValue, string name)
+            :this(
+                () => obj.GetType().GetProperty(property).SetValue(obj, undoValue),
+                () => obj.GetType().GetProperty(property).SetValue(obj, redoValue),
+                name
+            )
+        { }
 
     public class UndoRedo
     {
