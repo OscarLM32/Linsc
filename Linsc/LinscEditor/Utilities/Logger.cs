@@ -27,7 +27,7 @@ namespace LinscEditor.Utilities
         public string File { get; }
         public string Caller { get; }
         public int Line { get; }
-        public string Metadata => $"{File}: {Caller} ({Line})";
+        public string MetaData => $"{File}: {Caller} ({Line})";
 
         public LogMessage(MessageType messageType, string message, string file, string caller, int line)
         {
