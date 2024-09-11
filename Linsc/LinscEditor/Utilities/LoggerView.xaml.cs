@@ -23,6 +23,13 @@ namespace LinscEditor.Utilities
         public LoggerView()
         {
             InitializeComponent();
+
+            Loaded += (s, e) =>
+            {
+                Logger.LogMessage(MessageType.INFO, "Info message");
+                Logger.LogMessage(MessageType.WARNING, "Warning message");
+                Logger.LogMessage(MessageType.ERROR, "Error message");
+            };
         }
     }
 }
