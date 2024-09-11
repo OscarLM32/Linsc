@@ -11,9 +11,9 @@ namespace LinscEditor.Utilities
     {
         NONE = 0,
         
-        INFO,
-        WARNING,
-        ERROR,
+        INFO = 1 << 0,
+        WARNING = 1 << 1,
+        ERROR = 1 << 2,
 
         EVERYTHING = INFO | WARNING | ERROR 
     }
@@ -74,7 +74,7 @@ namespace LinscEditor.Utilities
             }));
         }
 
-        public static async void FilterMessages(int mask)
+        public static async void SetMessageFilter(int mask)
         {
             _messageFilter = mask;
             FilteredMessages.View.Refresh();

@@ -1,23 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace LinscEditor.Utilities
 {
-    /// <summary>
-    /// Interaction logic for LoggerView.xaml
-    /// </summary>
     public partial class LoggerView : UserControl
     {
         public LoggerView()
@@ -30,6 +15,21 @@ namespace LinscEditor.Utilities
                 Logger.LogMessage(MessageType.WARNING, "Warning message");
                 Logger.LogMessage(MessageType.ERROR, "Error message");
             };
+        }
+
+        private void OnClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            Logger.Clear();
+        }
+
+        private void OnMessageFilter_ToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            var filterMask = MessageType.NONE;
+            if(toggleInfo.IsChecked == true) filterMask |= MessageType.INFO;
+            if(toggleWarning.IsChecked == true) filterMask |= MessageType.WARNING;
+            if(toggleError.IsChecked == true) filterMask |= MessageType.ERROR;
+
+            Logger.SetMessageFilter((int)filterMask);
         }
     }
 }
