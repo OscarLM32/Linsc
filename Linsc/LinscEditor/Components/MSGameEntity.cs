@@ -124,6 +124,9 @@ namespace LinscEditor.Components
 
     internal class MSGameEntity : MSEntity
     {
-
+        public MSGameEntity(List<GameEntity> selectedEntities) : base(selectedEntities)
+        {
+            Refresh();
+        }
     }
 }
