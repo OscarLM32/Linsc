@@ -25,20 +25,21 @@ namespace LinscEditor.Editors.GameEditor
 
         private void OnSceneEntitiesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            GameEntityView.Instance.DataContext = null;
-            var listbox = (ListBox)sender;
-            if(listbox.SelectedItems.Count > 0)
-            {
-                GameEntityView.Instance.DataContext = listbox.SelectedItems[0];
-            }
-
-            AddselectionUndoRedoActions(listbox, e);
-        }
-
-        private void AddselectionUndoRedoActions(ListBox listbox, SelectionChangedEventArgs e)
-        {
+            var listbox = (ListBox)sender; 
             var newSelection = listbox.SelectedItems.Cast<GameEntity>().ToList();
             var previousSelection = newSelection.Except(e.AddedItems.Cast<GameEntity>()).Concat(e.RemovedItems.Cast<GameEntity>()).ToList();
+            AddselectionUndoRedoActions(listbox, newSelection, previousSelection);
+
+            MSGameEntity msEntity = null;
+            if (newSelection.Any())
+            {
+                msEntity = new(newSelection);
+            }
+            GameEntityView.Instance.DataContext = msEntity;
+        }
+
+        private void AddselectionUndoRedoActions(ListBox listbox, List<GameEntity> newSelection, List<GameEntity> previousSelection)
+        {
 
             Project.UndoRedo.Add(new UndoRedoAction
             (
