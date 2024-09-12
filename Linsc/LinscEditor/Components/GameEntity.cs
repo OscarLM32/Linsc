@@ -27,7 +27,6 @@ namespace LinscEditor.Components
                 }
             }
         }
-        public ICommand RenameCommand { get; private set; }
 
         private bool _isEnabled = true;
         [DataMember]
@@ -43,7 +42,6 @@ namespace LinscEditor.Components
                 }
             }
         }
-        public ICommand IsEnableCommand { get; private set; }
 
         [DataMember]
         public Scene ParentScene { get; private set; }
@@ -70,36 +68,6 @@ namespace LinscEditor.Components
                 Components = new(_components);
                 OnPropertyChanged(nameof(Components));
             }
-
-            RenameCommand = new RelayCommand<string>
-            (
-                newName =>
-                {
-                    string oldName = Name;
-                    Name = newName;
-
-                    Project.UndoRedo.Add(new UndoRedoAction(nameof(Name), this, oldName, newName, $"Rename {oldName} to {newName}"));
-                },
-
-                newName =>
-                {
-                    bool ret = true;
-
-                    ret = ret && !string.IsNullOrEmpty(newName);
-                    ret = ret && (_name != newName);
-                    return ret;
-                }
-            );
-
-            IsEnableCommand = new RelayCommand<bool>
-            (
-                value =>
-                {
-                    IsEnabled = value;
-
-                    Project.UndoRedo.Add(new UndoRedoAction(nameof(IsEnabled), this, !value, value, $"Enable/Disable {Name}"));
-                }
-            );
         }
     }
 }
