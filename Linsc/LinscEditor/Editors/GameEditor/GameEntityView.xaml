@@ -15,9 +15,12 @@
                 <ColumnDefinition Width="10*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBox Grid.Column="1" Text="{Binding Name}"/>
-            <CheckBox Grid.Column="2" IsChecked="{Binding IsEnabled}" 
-                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Text="{Binding Name, UpdateSourceTrigger=Explicit}"
+                     GotKeyboardFocus="OnName_TextBox_GotKeyboardFocus"
+                     LostKeyboardFocus="OnName_TextBox_LostKeyboardFocus"/>
+            <CheckBox Grid.Column="2" IsChecked="{Binding IsEnabled, Mode=OneWay}" 
+                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                      Click="OnIsEnabled_CheckBox_Click"/>
         </Grid>
         <ItemsControl ItemsSource="{Binding Components}" Foreground="White">
         </ItemsControl>
