@@ -9,7 +9,7 @@ using System.Windows.Input;
 namespace LinscEditor.GameProject
 {
     [DataContract(Name = "GameProject")]
-    public class Project : ViewModelBase
+    internal class Project : ViewModelBase
     {
         public static Project Current => Application.Current.MainWindow.DataContext as Project;
 

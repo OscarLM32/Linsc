@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace LinscEditor.Components
 {
     [DataContract]
-    public class Component : ViewModelBase
+    internal abstract class Component : ViewModelBase
     {
         [DataMember]
         public GameEntity Owner { get; private set; }

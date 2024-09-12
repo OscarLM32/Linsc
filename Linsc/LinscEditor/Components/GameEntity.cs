@@ -11,7 +11,7 @@ namespace LinscEditor.Components
 {
     [DataContract]
     [KnownType(typeof(Transform))]
-    public class GameEntity : ViewModelBase
+    internal class GameEntity : ViewModelBase
     {
         private string _name = "New GameEntity";
         [DataMember]

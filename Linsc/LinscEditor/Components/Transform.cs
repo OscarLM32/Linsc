@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace LinscEditor.Components
 {
     [DataContract]
-    public class Transform : Component
+    internal class Transform : Component
     {
 
         private Vector3 _position;

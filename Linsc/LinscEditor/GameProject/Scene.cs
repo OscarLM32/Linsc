@@ -8,7 +8,7 @@ using System.Windows.Input;
 namespace LinscEditor.GameProject
 {
     [DataContract]
-    public class Scene : ViewModelBase
+    internal class Scene : ViewModelBase
     {
 
         private string _name;
