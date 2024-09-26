@@ -1,6 +1,3 @@
-#ifndef LINSCENGINE_COMMONS_COMMONHEADERS_H_
-#define LINSCENGINE_COMMONS_COMMONHEADERS_H_
-
 #pragma once
 
 //C/C++ standard
