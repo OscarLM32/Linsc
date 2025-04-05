@@ -31,7 +31,7 @@ namespace linsc::id
 	{
 		id_type index = { id & internal::index_mask };
 		assert(index != internal::index_mask);
-		return id & internal::index_mask;
+		return index;
 	}
 
 	constexpr id_type generation(id_type id)
